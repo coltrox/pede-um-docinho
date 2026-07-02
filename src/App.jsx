@@ -31,6 +31,8 @@ export default function App() {
   const instagramLink = 'https://www.instagram.com/confeitariapedeumdocinho/';
   const facebookLink = 'https://www.facebook.com/confeitariapedeumdocinho/';
   const googleMapsLink = 'https://www.google.com/maps/place/Confeitaria+Pede+Um+Docinho+-+Bolos+-+Doces+-+Sobremesas+%C3%A0+Pronta+Entrega+-+Cafeteria+Espa%C3%A7o+Infantil-+Delivery+Bolos+e+Doces/@-22.96972,-47.002239,16z/data=!4m17!1m8!3m7!1s0x94c8cdbe58131517:0x61c2a43c75a0be24!2sAv.+Onze+de+Agosto,+1555+-+Vila+Embare,+Valinhos+-+SP,+13271-210!3b1!8m2!3d-22.9698117!4d-47.0023253!16s%2Fg%2F11fx2w51xy!3m7!1s0x94c8cdbe5a1f5e5f:0xbd1e15db441805b0!8m2!3d-22.9698117!4d-47.0023253!9m1!1b1!16s%2Fg%2F11c1v2ht2_?hl=pt-BR&entry=ttu';
+  const cardapioLink = 'https://drive.google.com/file/d/1sbkNiFCO_4z8vUXuusCK3vv4GnM0Xl5T/view';
+  const deliveryLink = 'https://pedeumdocinhovalinhos.menudino.com/';
 
   // Buscar os dados criados/editados no painel Admin direto do Supabase
   useEffect(() => {
@@ -197,21 +199,21 @@ export default function App() {
       {/* Quick Actions Grid */}
       <div className={styles.actionsWrapper}>
         <div className={styles.actionsGrid}>
-          <a 
-            href={whatsappLinkBase}
-            target="_blank" 
-            rel="noreferrer"
-            className={`${styles.actionBtn} ${styles.whatsappBtn}`}
-          >
+          <a href={whatsappLinkBase} target="_blank" rel="noreferrer" className={`${styles.actionBtn} ${styles.whatsappBtn}`}>
             <Phone size={18} /> Pedir pelo WhatsApp
           </a>
           
-          <a 
-            href={googleMapsLink} 
-            target="_blank" 
-            rel="noreferrer" 
-            className={styles.actionBtn}
-          >
+          {/* Novo Botão Cardápio */}
+          <a href={cardapioLink} target="_blank" rel="noreferrer" className={styles.actionBtn}>
+            <Menu size={18} /> Ver Cardápio
+          </a>
+
+          {/* Novo Botão Delivery */}
+          <a href={deliveryLink} target="_blank" rel="noreferrer" className={`${styles.actionBtn} ${styles.deliveryBtn}`}>
+            <Star size={18} /> Delivery Online
+          </a>
+          
+          <a href={googleMapsLink} target="_blank" rel="noreferrer" className={styles.actionBtn}>
             <Star className={styles.starIcon} size={18} /> Avaliações
           </a>
           
@@ -219,7 +221,6 @@ export default function App() {
             <svg className={styles.instagramIconSvg} viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
               <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
               <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
             </svg> Instagram
           </a>
 
@@ -241,7 +242,7 @@ export default function App() {
           <div className={styles.gourmetGrid}>
             {categorias.map((cat) => {
               const indexAtual = cardIndexes[cat.id] || 0;
-              const urlsImagens = cat.image_url || []; // Puxa o array de strings direto da coluna image_url
+              const urlsImagens = cat.image_url || [];
 
               return (
                 <div key={cat.id} className={styles.gourmetCard} onClick={() => abrirCarrosselModal(cat)}>
@@ -256,7 +257,7 @@ export default function App() {
                       <ChevronLeft size={20} />
                     </button>
 
-                    {/* Exibe a imagem se ela existir no array do banco, senão mantém o placeholder cinza idêntico ao original */}
+                    {/* Exibe a imagem se ela existir no array do banco */}
                     {urlsImagens.length > 0 && urlsImagens[indexAtual] ? (
                       <img 
                         src={urlsImagens[indexAtual]} 
